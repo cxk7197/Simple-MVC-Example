@@ -83,7 +83,6 @@ const readDog = (req, res) => {
 // controller functions in Express receive the full HTTP request
 // and a pre-filled out response object to send
 const hostPage1 = (req, res) => {
- 
   const callback = (err, docs) => {
     if (err) {
       return res.json({ err }); // if error, return it
@@ -124,7 +123,6 @@ const getName = (req, res) => {
 };
 
 const setName = (req, res) => {
-
   if (!req.body.firstname || !req.body.lastname || !req.body.beds) {
     // if not respond with a 400 error
     // (either through json or a web page depending on the client dev)
@@ -155,7 +153,7 @@ const setName = (req, res) => {
   });
 
   // if error, return it
-  savePromise.catch((err) => res.json({ err }));
+  savePromise.catch(err => res.json({ err }));
 
   return res;
 };
@@ -182,19 +180,17 @@ const setDog = (req, res) => {
     res.json({ name: lastDog.name, breed: lastDog.breed, age: lastDog.age });
   });
 
-  savePromise.catch((err) => res.json({ err }));
+  savePromise.catch(err => res.json({ err }));
 
   return res;
 };
 
 
-
 const searchName = (req, res) => {
-  
   if (!req.query.name) {
     return res.json({ error: 'Name is required to perform a search' });
   }
-    
+
   return Cat.findByName(req.query.name, (err, doc) => {
     // errs, handle them
     if (err) {
@@ -233,11 +229,11 @@ const searchDogName = (req, res) => {
     savePromise.then(() => res.json({
       name: updatedDog.name,
       breed: updatedDog.breed,
-      age: updatedDog.age
+      age: updatedDog.age,
     }));
 
     // if save error, just return an error for now
-    savePromise.catch((saveErr) => res.json({ saveErr }));
+    savePromise.catch(saveErr => res.json({ saveErr }));
 
     return res.json({ name: doc.name, breed: doc.breed, age: doc.age });
   });
@@ -266,7 +262,7 @@ const updateLast = (req, res) => {
   savePromise.then(() => res.json({ name: lastAdded.name, beds: lastAdded.bedsOwned }));
 
   // if save error, just return an error for now
-  savePromise.catch((err) => res.json({ err }));
+  savePromise.catch(err => res.json({ err }));
 };
 
 // function to handle a request to any non-real resources (404)
